@@ -49,22 +49,4 @@ async def py(ctx, arg):
     result = run_python(arg)
     await ctx.send(result)
 
-
-# @client.event
-# async def on_message(msg):
-#     if msg.author == client.user:
-#         return
-
-#     if msg.content.startswith('$hello'):
-#         await msg.channel.send('Hello')
-
-#     elif msg.content.startswith('$inspire'):
-#         quote = get_quote()
-#         await msg.channel.send(quote)
-
-#     elif msg.content.startswith('$py'):
-#         result = run_python(msg.content.strip('$py'))
-#         await msg.channel.send(result)
-
-
 client.run(token)
