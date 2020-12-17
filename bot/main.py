@@ -1,10 +1,11 @@
 import discord
+from discord.ext import commands
 import requests
 import json
 import subprocess as sp
 import os
 
-client = discord.Client()
+client = commands.Bot(command_prefix="$")
 token = os.getenv("DISCORD_BOT_TOKEN")
 
 
@@ -23,6 +24,7 @@ def run_python(code):
     result = "Results:\n{0.stdout}\nErrors: {0.stderr}".format(proc)
     return result
 
+
 def run_c(code):
     pass
 
@@ -32,21 +34,37 @@ async def on_ready():
     print('we have logged in as {0.user}'.format(client))
 
 
-@client.event
-async def on_message(msg):
-    if msg.author == client.user:
-        return
+@client.command()
+async def ping(ctx):
+    await ctx.send(f"🏓 Pong with {str(round(client.latency, 2))}")
 
-    if msg.content.startswith('$hello'):
-        await msg.channel.send('Hello')
 
-    elif msg.content.startswith('$inspire'):
-        quote = get_quote()
-        await msg.channel.send(quote)
+@client.command()
+async def inspire(ctx):
+    await ctx.send(get_quote())
 
-    elif msg.content.startswith('$py'):
-        result = run_python(msg.content.strip('$py'))
-        await msg.channel.send(result)
+
+@client.command()
+async def py(ctx, arg):
+    result = run_python(arg)
+    await ctx.send(result)
+
+
+# @client.event
+# async def on_message(msg):
+#     if msg.author == client.user:
+#         return
+
+#     if msg.content.startswith('$hello'):
+#         await msg.channel.send('Hello')
+
+#     elif msg.content.startswith('$inspire'):
+#         quote = get_quote()
+#         await msg.channel.send(quote)
+
+#     elif msg.content.startswith('$py'):
+#         result = run_python(msg.content.strip('$py'))
+#         await msg.channel.send(result)
 
 
 client.run(token)
