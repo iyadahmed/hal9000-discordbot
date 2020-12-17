@@ -2,8 +2,10 @@ import discord
 import requests
 import json
 import subprocess as sp
+import os
 
 client = discord.Client()
+token = os.getenv("DISCORD_BOT_TOKEN")
 
 
 def get_quote():
@@ -47,4 +49,4 @@ async def on_message(msg):
         await msg.channel.send(result)
 
 
-client.run('Nzg4NzIwNDEwMDA2Mzg4NzU2.X9nnHw.3lW_oO6HeMXJma8zDeCQgl53yW0')
+client.run(token)
