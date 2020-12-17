@@ -14,11 +14,11 @@ def get_quote():
 
 
 def run_python(code):
-    proc = sp.run(['python', './run_python.py', code],
+    proc = sp.run(['python3', './run_python.py', code],
                   capture_output=True,
                   timeout=1,
                   encoding='UTF-8')
-    result = "OUTPUT: {0.stdout}\nERR: {0.stderr}".format(proc)
+    result = "Results:\n{0.stdout}\nErrors: {0.stderr}".format(proc)
     return result
 
 def run_c(code):
