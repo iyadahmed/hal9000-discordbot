@@ -12,26 +12,20 @@ token = os.getenv("DISCORD_BOT_TOKEN")
 def get_quote():
     response = requests.get("https://zenquotes.io/api/random")
     json_data = json.loads(response.text)
-    quote = json_data[0]['q'] + " -" + json_data[0]['a']
-    return quote
+    quote = json_data[0]["q"]
+    quotee = json_data[0]["a"]
+    return f"{quote} -{quotee}"
 
 
-def run_python(code):
-    proc = sp.run(['python3', './run_python.py', code],
-                  capture_output=True,
-                  timeout=1,
-                  encoding='UTF-8')
-    result = "Results:\n{0.stdout}\nErrors: {0.stderr}".format(proc)
-    return result
-
-
-def run_c(code):
-    pass
+def get_cat_fact():
+    response = requests.get("https://catfact.ninja/fact")
+    json_data = response.json()
+    return json_data["fact"]
 
 
 @client.event
 async def on_ready():
-    print('we have logged in as {0.user}'.format(client))
+    print("we have logged in as {0.user}".format(client))
 
 
 @client.command()
@@ -45,8 +39,8 @@ async def inspire(ctx):
 
 
 @client.command()
-async def py(ctx, arg):
-    result = run_python(arg)
-    await ctx.send(result)
+async def catfact(ctx):
+    await ctx.send(get_cat_fact())
+
 
 client.run(token)
